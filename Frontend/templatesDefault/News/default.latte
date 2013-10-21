@@ -1,0 +1,18 @@
+{block #content}
+	
+	<h1>{$actualPage->getTitle()}</h1>
+	
+	
+	
+	{if is_object($photogallery)}
+		{foreach $photogallery->getPhotos() as $photo}
+			<div class="col-sm-6 col-md-3">
+				<div class="img-thumbnail">
+					<a href="{$basePath}{$photo->getPath()}" data-lightbox="photogallery" title="{$photo->getTitle()}">
+						<img src="{$basePath}{$photo->getPath()|thumbnail:'system'}" />
+					</a>
+				</div>
+			</div>
+		{/foreach}
+	{/if}
+{/block}
