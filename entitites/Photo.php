@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as orm;
 /**
  * Description of Photo
  * @orm\Entity
- * @orm\Table(name="pageModulePhoto")
+ * @orm\Table(name="newsPhoto")
  * @author Tomáš Voslař <tomas.voslar at webcook.cz>
  */
 class Photo extends \AdminModule\Doctrine\Entity{
