@@ -4,5 +4,14 @@
 
 	<h1>{$actualPage->getTitle()}</h1>
 	
+	<a class="btn btn-primary ajax" n:href="updateActuality idPage => $actualPage->getId()">{_'Add actuality'}</a>
+
+<br /><br />
+
+<div class="tab-content">
+	<div class="tab-pane active">
+		{control newsGrid}
+	</div>
+</div>
 	
 {/block}

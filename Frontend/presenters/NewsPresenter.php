@@ -20,7 +20,7 @@ class NewsPresenter extends \FrontendModule\BasePresenter{
 	}
 
 	protected function beforeRender() {
-		parent::beforeRender();
+		
 		
 	}
 	
@@ -28,25 +28,56 @@ class NewsPresenter extends \FrontendModule\BasePresenter{
 		
 		$this->news = $this->repository->findBy(array(
 			'page' => $this->actualPage
-		));
+		), array('date' => 'DESC'));
 		
+		$this->template->sidebar = array('asdf', 'asdf');
 	}
 	
 	public function renderDefault($id){
 		
+		$detail = $this->getParameter('parameters');
+		$actuality = NULL;
+		
+		if(count($detail) > 0){
+			$actuality = $this->repository->findOneBySlug($detail[0]);
+			
+			if(!is_object($actuality)){
+				$this->redirect('default', array(
+					'path' => $this->actualPage->getPath(),
+					'abbr' => $this->abbr
+				));
+			}
+			
+			$this->addToBreadcrumbs($this->actualPage->getId(), 
+				'News',
+				'News',
+				$actuality->getTitle(),
+				$this->actualPage->getPath() . '/' . $actuality->getSlug()
+			);
+		}
+		
+		parent::beforeRender();
+		
+		$this->template->actuality = $actuality;
 		$this->template->news = $this->news;
 		$this->template->id = $id;
 	}
 	
 	
 	public function newsBox($context, $fromPage){
-		$page = $context->em->getRepository('WebCMS\PageModule\Doctrine\Page')->findOneBy(array(
-			'page' => $fromPage
-		));
 		
-		$text = '<h1>' . $fromPage->getTitle() . '</h1>';
-		$text .= $page->getText();
+		$repository = $context->em->getRepository('WebCMS\NewsModule\Doctrine\Actuality');
+		$actualities = $repository->findBy(array(), array('date' => 'DESC'));
 		
-		return $text;
+		$template = $context->createTemplate();
+		$template->setFile('../app/templates/news-module/News/box.latte');
+		$template->actualities = $actualities;
+		$template->link = $context->link(':Frontend:News:News:default', array(
+			'id' => $fromPage->getId(),
+			'path' => $fromPage->getPath(),
+			'abbr' => $context->abbr
+				));
+		
+		return $template;
 	}
 }

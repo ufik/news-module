@@ -3,6 +3,7 @@
 namespace WebCMS\NewsModule\Doctrine;
 
 use Doctrine\ORM\Mapping as orm;
+use Gedmo\Mapping\Annotation as gedmo;
 
 /**
  * Description of News
@@ -27,10 +28,27 @@ class Actuality extends \AdminModule\Doctrine\Entity {
 	private $text;
 	
 	/**
+	 * @orm\Column(type="date")
+	 */
+	private $date;
+	
+	/**
 	 * @orm\ManyToOne(targetEntity="AdminModule\Page")
 	 * @orm\JoinColumn(name="page_id", referencedColumnName="id", onDelete="CASCADE")
 	 */
 	private $page;
+	
+	/**
+     * @gedmo\Slug(fields={"title"})
+     * @orm\Column(length=64)
+     */
+	private $slug;
+	
+	/**
+	 * @orm\OneToMany(targetEntity="Photo", mappedBy="actuality") 
+	 * @var Array
+	 */
+	private $photos;
 	
 	public function getTitle() {
 		return $this->title;
@@ -62,5 +80,29 @@ class Actuality extends \AdminModule\Doctrine\Entity {
 
 	public function setPage($page) {
 		$this->page = $page;
+	}
+	
+	public function getDate() {
+		return $this->date;
+	}
+
+	public function setDate($date) {
+		$this->date = $date;
+	}
+	
+	public function getSlug() {
+		return $this->slug;
+	}
+
+	public function setSlug($slug) {
+		$this->slug = $slug;
+	}
+	
+	public function getPhotos() {
+		return $this->photos;
+	}
+
+	public function setPhotos(Array $photos) {
+		$this->photos = $photos;
 	}
 }
