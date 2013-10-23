@@ -58,11 +58,31 @@ class NewsPresenter extends \FrontendModule\BasePresenter{
 		
 		parent::beforeRender();
 		
+		$this->template->sidebar = $this->sidebar($this->news);
 		$this->template->actuality = $actuality;
 		$this->template->news = $this->news;
 		$this->template->id = $id;
 	}
 	
+	public function sidebar($items){
+		$class = $this->settings->get('Sidebar class', 'newsModule' . $this->actualPage->getId(), 'text', array())->getValue();
+		$sidebar = '<ul class="' . $class . '">';
+		
+		$parameters = $this->getParameter('parameters');
+		$detail = count($parameters) > 0 ? $parameters[0] : '';
+		
+		foreach($items as $item){
+			$selected = $detail == $item->getSlug() ? 'class="active"' : '';
+			
+			$sidebar .= '<li ' . $selected . '><a ' . $selected . ' href="' . $this->link('default', array(
+				'path' => $this->actualPage->getPath(),
+				'abbr' => $this->abbr,
+				'parameters' => array($item->getSlug())
+			)) . '">' . $item->getTitle() . '</a></li>';
+		}
+		
+		return $sidebar .= '</ul>';
+	}
 	
 	public function newsBox($context, $fromPage){
 		

@@ -29,6 +29,7 @@ class SettingsPresenter extends \AdminModule\BasePresenter {
 	public function createComponentSettingsForm(){
 		
 		$settings = array();
+		$settings[] = $this->settings->get('Sidebar class', 'newsModule' . $this->actualPage->getId(), 'text', array());
 		
 		return $this->createSettingsForm($settings);
 	}

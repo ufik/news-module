@@ -105,4 +105,14 @@ class Actuality extends \AdminModule\Doctrine\Entity {
 	public function setPhotos(Array $photos) {
 		$this->photos = $photos;
 	}
+	
+	public function getDefaultPhoto(){
+		foreach($this->getPhotos() as $photo){
+			if($photo->getDefault()){
+				return $photo;
+			}
+		}
+		
+		return NULL;
+	}
 }

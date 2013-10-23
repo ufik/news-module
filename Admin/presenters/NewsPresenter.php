@@ -95,10 +95,20 @@ class NewsPresenter extends \AdminModule\BasePresenter {
 			
 		if(array_key_exists('files', $_POST)){
 			$counter = 0;
+			if(array_key_exists('fileDefault', $_POST)) $default = intval($_POST['fileDefault'][0]) - 1;
+			else $default = -1;
+			
 			foreach($_POST['files'] as $path){
 
 				$photo = new \WebCMS\NewsModule\Doctrine\Photo;
 				$photo->setTitle($_POST['fileNames'][$counter]);
+				
+				if($default === $counter){
+					$photo->setDefault(TRUE);
+				}else{
+					$photo->setDefault(FALSE);
+				}
+				
 				$photo->setPath($path);
 				$photo->setActuality($this->actuality);
 
