@@ -5,20 +5,28 @@
 		<h1>{$actualPage->getTitle()}</h1>
 
 		{foreach $news as $new}
-			<div>
-				<h2>{$new->getTitle()}</h2>
-				
+			<div class="panel panel-default">
+			    <div class="panel-body">
+				<h2><a n:href="default parameters => array($new->getSlug()), abbr => $abbr, path => $actualPage->getPath()" title="{$new->getTitle()}">{$new->getTitle()}</a></h2>
+				<span class="label label-default newsDate">
+				    <span class="dayInDate">{$new->getDate()->format('d')}</span>.
+				    <span class="monthInDate">{$new->getDate()->format('m')}</span>.
+				    <span class="yearInDate">{$new->getDate()->format('Y')}</span>
+				</span>
 				{if $new->getDefaultPhoto()}
-					<img src="{$basePath}{$new->getDefaultPhoto()->getPath()|thumbnail:'system'}" />
-				{/if}
+				<a n:href="default parameters => array($new->getSlug()), abbr => $abbr, path => $actualPage->getPath()" title="{$new->getTitle()}">
+					<img src="{$basePath}{$new->getDefaultPhoto()->getPath()|thumbnail:'system'}" class="img-thumbnail float-l" />
+				</a>
+				{/if}	
 				
-				{$new->getDate()->format('d.m.Y')}
 				{!$new->getPerex()}
-
-				<a n:href="default parameters => array($new->getSlug()), abbr => $abbr, path => $actualPage->getPath()">{_'Detail'}</a>
-			</div>
+			    </div><!-- / .panel-body -->
+			    <div class="panel-footer">
+				<a n:href="default parameters => array($new->getSlug()), abbr => $abbr, path => $actualPage->getPath()" class="btn btn-primary">{_'Číst více'}</a>
+			    </div><!-- /.panel-footer -->
+			</div><!-- / .panel -->
 		{/foreach}
-	
+		<div class="clearfix"></div>
 	{else}
 		
 		{include detail.latte}

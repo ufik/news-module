@@ -2,18 +2,34 @@
 	
 	<h1>{$actuality->getTitle()}</h1>
 	
-	{$actuality->getDate()->format('d.m.Y')}
+	<span class="label label-default newsDate">
+	    <span class="dayInDate">{$actuality->getDate()->format('d')}</span>.
+	    <span class="monthInDate">{$actuality->getDate()->format('m')}</span>.
+	    <span class="yearInDate">{$actuality->getDate()->format('Y')}</span>
+	</span>
 	
 	{if $actuality->getDefaultPhoto()}
-		<img src="{$basePath}{$actuality->getDefaultPhoto()->getPath()|thumbnail:'system'}" />
+		<img src="{$basePath}{$actuality->getDefaultPhoto()->getPath()|thumbnail:'system'}" class="thumbnail float-l" />
 	{/if}
 	
+	<div class="newsMainText">
 	{!$actuality->getText()}
+	</div>
+		
+	<div class="clearfix"></div>
+		
+	{if count($actuality->getPhotos()) > 0}
+	<h2>{_'Související fotogalerie'}</h2>
+	{/if}
 	
+	<div class="row newsRelatedImages">
 	{foreach $actuality->getPhotos() as $photo}
-		<a href="{$basePath}{$photo->getPath()|thumbnail:'news'}" data-lightbox="gallery">
-			<img src="{$basePath}{$photo->getPath()|thumbnail:'system'}" />
-		</a>
+		<div class="col-sm-6 col-md-3">
+		    <a href="{$basePath}{$photo->getPath()|thumbnail:'news'}" data-lightbox="gallery" class="thumbnail">
+			    <img src="{$basePath}{$photo->getPath()|thumbnail:'system'}" />
+		    </a>
+		</div>
 	{/foreach}
+	</div><!-- /.row -->
 	
 {/block}
