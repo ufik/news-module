@@ -1,18 +1,28 @@
 {block #content}
 	
-	<h1>{$actualPage->getTitle()}</h1>
-	
-	
-	
-	{if is_object($photogallery)}
-		{foreach $photogallery->getPhotos() as $photo}
-			<div class="col-sm-6 col-md-3">
-				<div class="img-thumbnail">
-					<a href="{$basePath}{$photo->getPath()}" data-lightbox="photogallery" title="{$photo->getTitle()}">
-						<img src="{$basePath}{$photo->getPath()|thumbnail:'system'}" />
-					</a>
-				</div>
+	{if $actuality == NULL}
+
+		<h1>{$actualPage->getTitle()}</h1>
+
+		{foreach $news as $new}
+			<div>
+				<h2>{$new->getTitle()}</h2>
+				
+				{if $new->getDefaultPhoto()}
+					<img src="{$basePath}{$new->getDefaultPhoto()->getPath()|thumbnail:'system'}" />
+				{/if}
+				
+				{$new->getDate()->format('d.m.Y')}
+				{!$new->getPerex()}
+
+				<a n:href="default parameters => array($new->getSlug()), abbr => $abbr, path => $actualPage->getPath()">{_'Detail'}</a>
 			</div>
 		{/foreach}
+	
+	{else}
+		
+		{include detail.latte}
+		
 	{/if}
+	
 {/block}
