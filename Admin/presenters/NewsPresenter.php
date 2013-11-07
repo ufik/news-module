@@ -56,6 +56,21 @@ class NewsPresenter extends \AdminModule\BasePresenter {
 		}
 	}
 	
+	public function actionDeleteActuality($id){
+
+		$act = $this->repository->find($id);
+		$this->em->remove($act);
+		$this->em->flush();
+		
+		$this->flashMessage($this->translation['Actuality has been removed.'], 'success');
+		
+		if(!$this->isAjax()){
+			$this->redirect('default', array(
+				'idPage' => $this->actualPage->getId()
+			));
+		}
+	}
+	
 	public function createComponentActualityForm(){
 		$form = $this->createForm();
 		
