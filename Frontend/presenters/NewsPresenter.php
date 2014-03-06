@@ -87,7 +87,7 @@ class NewsPresenter extends \FrontendModule\BasePresenter{
 	public function newsBox($context, $fromPage){
 		
 		$repository = $context->em->getRepository('WebCMS\NewsModule\Doctrine\Actuality');
-		$actualities = $repository->findBy(array(), array('date' => 'DESC'));
+		$actualities = $repository->findBy(array('page' => $fromPage), array('date' => 'DESC'));
 		
 		$template = $context->createTemplate();
 		$template->setFile('../app/templates/news-module/News/box.latte');
