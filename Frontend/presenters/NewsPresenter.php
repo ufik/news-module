@@ -103,5 +103,4 @@ class NewsPresenter extends \FrontendModule\BasePresenter {
 
 	return $template;
     }
-
 }

@@ -29,7 +29,7 @@ class NewsPresenter extends \AdminModule\BasePresenter {
 	
 	protected function createComponentNewsGrid($name){
 		
-		$grid = $this->createGrid($this, $name, 'WebCMS\NewsModule\Doctrine\Actuality', array(array('by' => 'date', 'dir' => 'DESC')), NULL);
+		$grid = $this->createGrid($this, $name, 'WebCMS\NewsModule\Doctrine\Actuality', array(array('by' => 'date', 'dir' => 'DESC')), array('page =' . $this->actualPage->getId()));
 		
 		$grid->addColumnText('title', 'Name')->setSortable()->setFilterText();
 		$grid->addColumnDate('date', 'Date')->setSortable();
