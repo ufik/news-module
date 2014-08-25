@@ -30,6 +30,7 @@ class SettingsPresenter extends \AdminModule\BasePresenter {
 		
 		$settings = array();
 		$settings[] = $this->settings->get('Sidebar class', 'newsModule' . $this->actualPage->getId(), 'text', array());
+		$settings[] = $this->settings->get('News posts count', 'newsModule' . $this->actualPage->getId(), 'text', array());
 		
 		return $this->createSettingsForm($settings);
 	}
