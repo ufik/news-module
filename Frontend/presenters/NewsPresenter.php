@@ -3,7 +3,7 @@
 namespace FrontendModule\NewsModule;
 
 /**
- * Description of NewsPresenter
+ * Description of PagePresenter
  *
  * @author Tomáš Voslař <tomas.voslar at webcook.cz>
  */
@@ -13,6 +13,7 @@ class NewsPresenter extends \FrontendModule\BasePresenter {
     private $news;
  	private $ppp;
     private $paginator;
+    private $page;
 
     protected function startup() {
 	parent::startup();
@@ -26,13 +27,13 @@ class NewsPresenter extends \FrontendModule\BasePresenter {
 
     public function actionDefault($id) {
 
-	$page = $this->getParameter('p') ? $this->getParameter('p') : 0;
+	$this->page = $this->getParameter('p') ? $this->getParameter('p') : 0;
 	$this->ppp = $this->settings->get('News posts count', 'newsModule' . $this->actualPage->getId(), 'text', array())->getValue();
 
 	$this->paginator = new \Nette\Utils\Paginator;
 	$this->paginator->setItemCount(count($this->news = $this->repository->findAll())); 
 	$this->paginator->setItemsPerPage($this->ppp); 
-	$this->paginator->setPage($page == 0 ? $page + 1 : $page); 
+	$this->paginator->setPage($this->page == 0 ? $this->page + 1 : $this->page); 
 
 	$this->news = $this->repository->findBy(array(
 	    'page' => $this->actualPage
@@ -74,6 +75,7 @@ class NewsPresenter extends \FrontendModule\BasePresenter {
 	parent::beforeRender();
 
 	$this->template->paginator = $this->paginator;
+	$this->template->page = $this->page;
 
 	$this->template->sidebar = $this->sidebar($this->news);
 	$this->template->actuality = $actuality;
