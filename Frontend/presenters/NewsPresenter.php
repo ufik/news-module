@@ -30,6 +30,8 @@ class NewsPresenter extends \FrontendModule\BasePresenter {
 	$this->page = $this->getParameter('p') ? $this->getParameter('p') : 0;
 	$this->ppp = $this->settings->get('News posts count', 'newsModule' . $this->actualPage->getId(), 'text', array())->getValue();
 
+	$this->ppp = $this->ppp ? $this->ppp : 10000;
+
 	$this->paginator = new \Nette\Utils\Paginator;
 	$this->paginator->setItemCount(count($this->news = $this->repository->findAll())); 
 	$this->paginator->setItemsPerPage($this->ppp); 
