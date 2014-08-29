@@ -1,11 +1,14 @@
 {block content}
 
-	{include ../tabs.latte active => 'news'}
-
+	<div class="page-heading">
 	<h1>{_'News detail'}</h1>
+
+	{include ../tabs.latte active => 'news'}
 	
+	</div>
+	<br />
 	{form actualityForm}
-		
+		<div class="control-group">
 		<div class="form-group">
 			{label title /}
 			{input title class => 'form-control'}
@@ -42,8 +45,13 @@
 				{/foreach}
 			{/if}
 		</div>
+		</div>
 		
+		<div class="form-actions">
+
 		{input send class => 'btn btn-success'}
+
+		</div>
 		
 	{/form}
 			
