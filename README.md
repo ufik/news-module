@@ -6,11 +6,6 @@ News module (news-module)
 
 Module for WebCMS2. Contains news list, detail and box.
 
-PROGRESS
---------
-
-This module is currently under development. No tags has been created.
-
 INSTALLATION
 -----------
 
