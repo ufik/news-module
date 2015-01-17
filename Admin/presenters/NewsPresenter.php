@@ -65,7 +65,7 @@ class NewsPresenter extends \AdminModule\BasePresenter {
 		$this->flashMessage('Actuality has been removed.', 'success');
 		
 		if(!$this->isAjax()){
-			$this->redirect('default', array(
+			$this->forward('default', array(
 				'idPage' => $this->actualPage->getId()
 			));
 		}
@@ -136,7 +136,7 @@ class NewsPresenter extends \AdminModule\BasePresenter {
 		$this->em->flush();
 		
 		$this->flashMessage('Actuality has been saved.', 'success');
-		$this->redirect('default', array(
+		$this->forward('default', array(
 			'idPage' => $this->actualPage->getId()
 		));
 	}
