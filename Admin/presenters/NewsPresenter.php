@@ -111,7 +111,7 @@ class NewsPresenter extends \AdminModule\BasePresenter {
 		if(array_key_exists('files', $_POST)){
 			$counter = 0;
 			if(array_key_exists('fileDefault', $_POST)) $default = intval($_POST['fileDefault'][0]) - 1;
-			else $default = -1;
+			else $default = 0;
 			
 			foreach($_POST['files'] as $path){
 
