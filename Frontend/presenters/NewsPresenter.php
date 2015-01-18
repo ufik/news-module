@@ -79,7 +79,12 @@ class NewsPresenter extends \FrontendModule\BasePresenter {
 	$this->template->paginator = $this->paginator;
 	$this->template->page = $this->page;
 
-	$this->template->sidebar = $this->sidebar($this->news);
+	if ($this->settings->get('Overwrite sidebar?', 'newsModule' . $this->actualPage->getId(), 'checkbox', array())->getValue()) {
+		$this->template->sidebar = $this->sidebar($this->news);
+	} else {
+		$this->template->newsSidebar = $this->sidebar($this->news);
+	}
+	
 	$this->template->actuality = $actuality;
 	$this->template->news = $this->news;
 	$this->template->id = $id;
