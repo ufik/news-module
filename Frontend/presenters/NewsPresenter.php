@@ -137,6 +137,11 @@ class NewsPresenter extends \FrontendModule\BasePresenter {
         $template = $context->createTemplate();
         $template->setFile('../app/templates/news-module/News/boxReviews.latte');
         $template->actualities = $actualities;
+        $template->link = $context->link(':Frontend:News:News:default', array(
+            'id' => $fromPage->getId(),
+            'path' => $fromPage->getPath(),
+            'abbr' => $context->abbr
+        ));
 
         return $template;
     }
