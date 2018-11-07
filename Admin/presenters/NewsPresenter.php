@@ -35,6 +35,7 @@ class NewsPresenter extends \AdminModule\BasePresenter {
         $grid->addColumnText('isReview', 'Review')->setCustomRender(function($item) {
             return $item->getIsReview() ? 'Yes' : 'No';
         });
+        $grid->addColumnText('rank', 'Pořadí')->setSortable()->setFilterText();
 		$grid->addColumnDate('date', 'Date')->setSortable();
 		
 		$grid->addActionHref("updateActuality", 'Edit', 'updateActuality', array('idPage' => $this->actualPage->getId()))->getElementPrototype()->addAttributes(array('class' => array('btn' , 'btn-primary', 'ajax')));
@@ -80,6 +81,7 @@ class NewsPresenter extends \AdminModule\BasePresenter {
 		$form->addText('title', 'Title')->setRequired('Fill in title.');
 		$form->addText('date', 'Date')->setAttribute('class', array('datepicker'))->setRequired('Fill in date of this actuality.');
 		$form->addCheckbox('isReview', 'Review');
+        $form->addText('rank', 'Order');
 		$form->addTextArea('perex', 'Perex')->setAttribute('class', array('editor'));
 		$form->addTextArea('text', 'Text')->setAttribute('class', array('editor'));
 		
@@ -100,6 +102,7 @@ class NewsPresenter extends \AdminModule\BasePresenter {
 		$this->actuality->setDate(new \Nette\DateTime($values->date));
 		$this->actuality->setPage($this->actualPage);
 		$this->actuality->setIsReview($values->isReview);
+        $this->actuality->setRank($values->rank == "" ? null : $values->rank);
 		
 		if(!$this->actuality->getId()){
 			$this->em->persist($this->actuality);

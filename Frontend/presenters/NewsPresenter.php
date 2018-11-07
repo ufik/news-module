@@ -39,7 +39,7 @@ class NewsPresenter extends \FrontendModule\BasePresenter {
 
 	$this->news = $this->repository->findBy(array(
 	    'page' => $this->actualPage
-	    ), array('date' => 'DESC'), $this->paginator->getLength(), $this->paginator->getOffset()
+	    ), array('rank' => 'ASC'), $this->paginator->getLength(), $this->paginator->getOffset()
 	);
 
     }
@@ -112,19 +112,32 @@ class NewsPresenter extends \FrontendModule\BasePresenter {
 
     public function newsBox($context, $fromPage) {
 
-	$repository = $context->em->getRepository('WebCMS\NewsModule\Doctrine\Actuality');
-	$actualities = $repository->findBy(array(
-		'page' => $fromPage), array('date' => 'DESC'));
+        $repository = $context->em->getRepository('WebCMS\NewsModule\Doctrine\Actuality');
+        $actualities = $repository->findBy(array(
+            'page' => $fromPage), array('rank' => 'ASC'));
+    
+        $template = $context->createTemplate();
+        $template->setFile('../app/templates/news-module/News/box.latte');
+        $template->actualities = $actualities;
+        $template->link = $context->link(':Frontend:News:News:default', array(
+            'id' => $fromPage->getId(),
+            'path' => $fromPage->getPath(),
+            'abbr' => $context->abbr
+	    ));
 
-	$template = $context->createTemplate();
-	$template->setFile('../app/templates/news-module/News/box.latte');
-	$template->actualities = $actualities;
-	$template->link = $context->link(':Frontend:News:News:default', array(
-	    'id' => $fromPage->getId(),
-	    'path' => $fromPage->getPath(),
-	    'abbr' => $context->abbr
-	));
+	    return $template;
+    }
 
-	return $template;
+    public function reviewsBox($context, $fromPage) {
+
+        $repository = $context->em->getRepository('WebCMS\NewsModule\Doctrine\Actuality');
+        $actualities = $repository->findBy(array(
+            'isReview' => true), array('rank' => 'ASC'));
+
+        $template = $context->createTemplate();
+        $template->setFile('../app/templates/news-module/News/boxReviews.latte');
+        $template->actualities = $actualities;
+
+        return $template;
     }
 }

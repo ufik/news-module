@@ -35,6 +35,7 @@ class News extends \WebCMS\Module {
 	
 	public function __construct(){
 		$this->addBox('News box', 'News', 'newsBox');
+        $this->addBox('Reviews box', 'News', 'reviewsBox');
 	}
 	
 }

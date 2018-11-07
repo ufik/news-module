@@ -54,6 +54,11 @@ class Actuality extends \WebCMS\Entity\Entity {
      * @orm\Column(type="boolean")
      */
     private $isReview;
+
+    /**
+     * @orm\Column(type="integer", nullable=true)
+     */
+    private $rank;
 	
 	public function getTitle() {
 		return $this->title;
@@ -127,5 +132,15 @@ class Actuality extends \WebCMS\Entity\Entity {
 
     public function setIsReview($isReview) {
         $this->isReview = $isReview;
+    }
+
+    public function getRank()
+    {
+        return $this->rank;
+    }
+    public function setRank($rank)
+    {
+        $this->rank = $rank;
+        return $this;
     }
 }
