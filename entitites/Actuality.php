@@ -49,6 +49,11 @@ class Actuality extends \WebCMS\Entity\Entity {
 	 * @var Array
 	 */
 	private $photos;
+
+    /**
+     * @orm\Column(type="boolean")
+     */
+    private $isReview;
 	
 	public function getTitle() {
 		return $this->title;
@@ -115,4 +120,12 @@ class Actuality extends \WebCMS\Entity\Entity {
 		
 		return NULL;
 	}
+
+    public function getIsReview() {
+        return $this->isReview;
+    }
+
+    public function setIsReview($isReview) {
+        $this->isReview = $isReview;
+    }
 }
